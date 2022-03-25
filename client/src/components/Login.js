@@ -14,7 +14,8 @@ const Login = (props) => {
             method: 'POST', // *GET, POST, PUT, DELETE, etc.
             headers: {
                 'Content-Type': 'application/json',
-                // "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjIzYjQ3ZGU0MmFkYTk5YzUwNTkwNWY1In0sImlhdCI6MTY0ODE4Mzc0MH0.9bRxr6t6qqxnXEG_mV4-N8GR_bi5O68OPc8C1S5c-IU"
+                'Accept': 'application/json'
+
             },
             body: JSON.stringify({email: credentials.email, password: credentials.password}) // body data type must match "Content-Type" header
 
