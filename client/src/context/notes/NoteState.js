@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import NoteContext from "./noteContext";
 
 const NoteState = props => {
-    const host = "https://memosify.herokuapp.com"
+    const host = "http://localhost:5000"
     const notesInitial = [];
     const [notes, setNotes] = useState(notesInitial)
 
@@ -11,10 +11,13 @@ const NoteState = props => {
         const response = await fetch(`${host}/notes/addMemo`, {
             method: 'POST', // *GET, POST, PUT, DELETE, etc.
             headers: {
+                "auth-token": localStorage.getItem('token'),
                 'Content-Type': 'application/json',
-                "auth-token": localStorage.getItem('token')
+                'Access-Control-Allow-Origin': '*',
+                'Accept': '*/*'
             },
-            body: JSON.stringify({title, description, tag}) // body data type must match "Content-Type" header
+            mode: 'no-cors',
+            body: JSON.stringify({ title, description, tag }) // body data type must match "Content-Type" header
         });
         const note = await response.json
         setNotes(notes.concat(note))
@@ -24,9 +27,12 @@ const NoteState = props => {
         const response = await fetch(`${host}/notes/fetchAllMemos`, {
             method: 'GET', // *GET, POST, PUT, DELETE, etc.
             headers: {
+                "auth-token": localStorage.getItem('token'),
                 'Content-Type': 'application/json',
-                "auth-token": localStorage.getItem('token')
+                'Access-Control-Allow-Origin': '*',
+                'Accept': '*/*'
             },
+            mode: 'no-cors',
         });
         const json = await response.json()
         setNotes(json)
@@ -34,14 +40,16 @@ const NoteState = props => {
 
     // Delete note
     const deleteNote = async (id) => {
-    const response = await fetch(`${host}/notes/deleteMemo/${id}`, {
+        const response = await fetch(`${host}/notes/deleteMemo/${id}`, {
             method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
             headers: {
                 'Content-Type': 'application/json',
                 "auth-token": localStorage.getItem('token')
             },
+            mode: 'no-cors',
+
         });
-        const newNotes = notes.filter((note)=>{return note._id !== id})
+        const newNotes = notes.filter((note) => { return note._id !== id })
         setNotes(newNotes)
         props.showAlert("Deleted your memo successfully!", "success")
     }
@@ -51,10 +59,13 @@ const NoteState = props => {
         const response = await fetch(`${host}/notes/updateMemo/${id}`, {
             method: 'PUT', // *GET, POST, PUT, DELETE, etc.
             headers: {
+                "auth-token": localStorage.getItem('token'),
                 'Content-Type': 'application/json',
-                "auth-token": localStorage.getItem('token')
-            },
-            body: JSON.stringify({title, description, tag}) // body data type must match "Content-Type" header
+                'Access-Control-Allow-Origin': '*',
+                'Accept': '*/*'
+            }, 
+            mode: 'no-cors',
+            body: JSON.stringify({ title, description, tag }) // body data type must match "Content-Type" header
         });
         const json = await response.json();
         console.log(json)

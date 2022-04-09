@@ -4,7 +4,7 @@ import { Navigate, useNavigate } from 'react-router-dom'
 
 const SignUp = (props) => {
     const [credentials, setCredentials] = useState({ email: "", password: "", name: "" });
-    const host = "https://memosify.herokuapp.com"
+    const host = "http://localhost:5000"
     let navigate = useNavigate()
     const onChange = (e) => {
         setCredentials({ ...credentials, [e.target.name]: e.target.value })
@@ -15,8 +15,10 @@ const SignUp = (props) => {
             method: 'POST', // *GET, POST, PUT, DELETE, etc.
             headers: {
                 'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                'Access-Control-Allow-Origin': '*',
+                'Accept': '*/*'
             },
+            mode: 'no-cors',
             body: JSON.stringify({ name: credentials.name, email: credentials.email, password: credentials.password }) // body data type must match "Content-Type" header
 
         });
