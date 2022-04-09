@@ -1,23 +1,25 @@
 const connectToMongo = require("./database");
 connectToMongo();
 
-const express = require('express');
-var cors = require('cors')
+const express = require("express");
+var cors = require("cors");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 var corsOptions = {
-  origin: 'http://localhost:5000',
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-}
+  origin: "https://memosify.herokuapp.com",
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
 
-app.use(cors({
-  methods: ["GET", "PUT", "POST", "DELETE"]
-}))
+app.use(
+  cors({
+    methods: ["GET", "PUT", "POST", "DELETE"],
+  })
+);
 app.use(express.json());
 
-app.use('/auth', cors(corsOptions), require('./routes/auth'));
-app.use('/notes', cors(corsOptions), require('./routes/notes'));
+app.use("/auth", cors(corsOptions), require("./routes/auth"));
+app.use("/notes", cors(corsOptions), require("./routes/notes"));
 
 if (process.env.NODE_ENV == "production") {
   app.use(express.static("client/build"));
@@ -28,5 +30,5 @@ if (process.env.NODE_ENV == "production") {
 }
 
 app.listen(PORT, () => {
-  console.log(`Memosify running on ${PORT}`)
+  console.log(`Memosify running on ${PORT}`);
 });
