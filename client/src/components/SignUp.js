@@ -4,7 +4,7 @@ import { Navigate, useNavigate } from 'react-router-dom'
 
 const SignUp = (props) => {
     const [credentials, setCredentials] = useState({ email: "", password: "", name: "" });
-    const host = "http://localhost:5000"
+    const host = "https://memosify-backend.herokuapp.com"
     let navigate = useNavigate()
     const onChange = (e) => {
         setCredentials({ ...credentials, [e.target.name]: e.target.value })
